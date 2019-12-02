@@ -1,0 +1,21 @@
+.map-selector {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  right: 10px;
+  bottom: 10px;
+  z-index: 10;
+  .map-option {
+    width: 110px;
+    height: 80px;
+    background: white;
+    cursor: pointer;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-left: 10px;
+    transition: all 0.15s;
+    &:hover {
+      box-shadow: 0 0 10px black;
+    }
+  }
+}

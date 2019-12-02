@@ -1,0 +1,37 @@
+{
+  "id": "1531920",
+  "name": "city-gdp",
+  "font_family": "iconfont",
+  "css_prefix_text": "gdp-",
+  "description": "城市gdp项目图标",
+  "glyphs": [
+    {
+      "icon_id": "36107",
+      "name": "面积",
+      "font_class": "area",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "720978",
+      "name": "坐标",
+      "font_class": "coordinate",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "6677522",
+      "name": "距离测量",
+      "font_class": "distance",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "6970016",
+      "name": "工具",
+      "font_class": "tool",
+      "unicode": "e6fa",
+      "unicode_decimal": 59130
+    }
+  ]
+}
