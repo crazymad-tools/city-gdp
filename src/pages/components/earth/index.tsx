@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import ViewerService from '@/service/ViewerService';
 import { RotatePolygon, CityPoint, DashLine, CapitalStar, Cylinder } from '@/utils/Primtive';
 import ModeController from '@/service/ModeController';
-import MapSelector from './map-selector';
 
 export default function() {
   useEffect(() => {
@@ -30,8 +29,7 @@ export default function() {
 
   return (
     <>
-      <div id="map"></div>
-      <MapSelector />
+      <div id="map" />
     </>
   );
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Area, Distance, Point } from './measure';
 import './index.scss';
 import ToolCommon from './ToolCommon';
+import Tooltip from '../common/tooltip';
 
 interface Props {}
 
@@ -56,17 +57,21 @@ const Tool: React.FC<Props> = props => {
       <div className={`tool-list-wrap${toolExpand ? ' expand' : ' shrink'}`}>
         <div className="tool-list">
           {toolList.map((tool: Tool, index: number) => (
-            <span
-              key={index}
-              className={`iconfont ${tool.icon}${tool.active ? ' active' : ''}`}
-              onClick={toggleTool.bind(null, tool.name)}
-            />
+            <Tooltip direction="top" content={tool.name} delay={300} key={index}>
+              <span
+                key={index}
+                className={`iconfont ${tool.icon}${tool.active ? ' active' : ''}`}
+                onClick={toggleTool.bind(null, tool.name)}
+              />
+            </Tooltip>
           ))}
         </div>
       </div>
-      <div className="tool-toggle-btn" onClick={e => setToolExpand(!toolExpand)}>
-        <span className="iconfont gdp-tool" />
-      </div>
+      <Tooltip direction="top" content="工具箱" delay={300}>
+        <div className="tool-toggle-btn" onClick={e => setToolExpand(!toolExpand)}>
+          <span className="iconfont gdp-tool" />
+        </div>
+      </Tooltip>
     </div>
   );
 };
