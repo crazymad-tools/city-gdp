@@ -46,6 +46,8 @@ class Path {
     this.status = false;
     this._toggleMouse();
     Path.handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    Path.handler.removeInputAction(Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+    Path.handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
   }
 
   point(finish: Function) {
@@ -60,10 +62,40 @@ class Path {
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
   }
 
-  line() {
+  line(viewer: any, options: {
+    finish?: Function,
+    step?: Function,
+    cancel?: Function
+  }) {
     if (!Path.handler) return;
 
     this._start();
+    let positions: any[] = [];
+    let movePositions: any[] = [];
+    let entity: any = viewer.entities.add({
+      polyline: {
+        positions: new Cesium.CallbackProperty(() => {
+          return movePositions;
+        }),
+        width: 5,
+        material: Cesium.Color.RED
+      }
+    })
+    Path.handler.setInputAction((event: any) => {
+      let position = ViewerService.viewer.scene.camera.pickEllipsoid(event.position);
+      positions.push(position);
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    Path.handler.setInputAction((event: any) => {
+      // let position = ViewerService.viewer.scene.camera.pickEllipsoid(event.position);
+      // positions.push(position);
+      positions.pop();
+      options.finish && options.finish(positions);
+      this._end();
+    }, Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK );
+    Path.handler.setInputAction((movement: any) => {
+      let position = ViewerService.viewer.scene.camera.pickEllipsoid(movement.endPosition);
+      movePositions = positions.concat([position]);
+    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
   }
 
   area() {
