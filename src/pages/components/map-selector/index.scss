@@ -9,27 +9,32 @@
   z-index: 10;
   .map-option {
     position: absolute;
-    left: 0;
+    right: 0px;
     top: 0;
     width: 110px;
     height: 80px;
-    background: white;
-    cursor: pointer;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-left: 10px;
+    background: transparent;
     transition: all 0.15s;
-    &:hover {
-      box-shadow: 0 0 10px black;
+    img {
+      overflow: hidden;
+      border-radius: 5px;
+      cursor: pointer;
+      &:hover {
+        box-shadow: 0 0 10px black;
+      }
+    }
+  }
+  @for $i from 1 to 10 {
+    .map-option:nth-child(#{$i}) {
+      z-index: #{30 - $i};
     }
   }
   &:hover {
-    .map-option {
-      left: -110px;
-    }
     @for $i from 1 to 10 {
-      .map-option::nth-child($i) {
-        left: ($i * -120)px;
+      .map-option:nth-child(#{$i}) {
+        right: #{($i - 1) * 120}px;
+        padding-left: 10px;
+        // padding-right: 10px;
       }
     }
   }

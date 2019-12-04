@@ -32,9 +32,9 @@ const MapSelector: React.FC<Props> = props => {
   return (
     <div className="map-selector">
       {mapList.map((map: Map, index: number) => (
-        <div className="map-option" key={index} onClick={select.bind(null, map.key)}>
+        <div className="map-option" key={index}>
           <Tooltip content={map.name} direction="top" delay={500}>
-            <img src={map.cover} width="100%" height="100%" />
+            <img src={map.cover} width="100%" height="100%" onClick={select.bind(null, map.key)} />
           </Tooltip>
         </div>
       ))}
