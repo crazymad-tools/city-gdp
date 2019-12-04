@@ -34,6 +34,12 @@ const Tool: React.FC<Props> = props => {
       active: false,
       tool: Area,
     },
+    {
+      name: '框选',
+      icon: 'gdp-box-select',
+      active: false,
+      tool: Area
+    }
   ]);
 
   function toggleTool(name: string) {

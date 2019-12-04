@@ -1,4 +1,6 @@
 .map-selector {
+  width: 110px;
+  height: 80px;
   position: fixed;
   display: flex;
   flex-direction: row;
@@ -6,6 +8,9 @@
   bottom: 10px;
   z-index: 10;
   .map-option {
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 110px;
     height: 80px;
     background: white;
@@ -16,6 +21,16 @@
     transition: all 0.15s;
     &:hover {
       box-shadow: 0 0 10px black;
+    }
+  }
+  &:hover {
+    .map-option {
+      left: -110px;
+    }
+    @for $i from 1 to 10 {
+      .map-option::nth-child($i) {
+        left: ($i * -120)px;
+      }
     }
   }
 }

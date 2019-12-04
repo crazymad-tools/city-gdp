@@ -1,5 +1,11 @@
 import ViewerService from '@/service/ViewerService';
 
+export interface PathEntity {
+  path: any[];
+  points: any[];
+  entity: any;
+}
+
 class Path {
   /**
    * 状态,是否正在路径绘制中
@@ -20,7 +26,7 @@ class Path {
         outlineWidth: 2
       }
     });
-    this.entities.push(point);
+    return point;
   }
 
   private _toggleMouse() {
@@ -77,31 +83,87 @@ class Path {
         positions: new Cesium.CallbackProperty(() => {
           return movePositions;
         }),
-        width: 5,
-        material: Cesium.Color.RED
+        width: 3,
+        material: Cesium.Color.WHITE
       }
-    })
+    });
     Path.handler.setInputAction((event: any) => {
       let position = ViewerService.viewer.scene.camera.pickEllipsoid(event.position);
+      if (positions.length > 1 && position.equals(positions[positions.length - 1])) return;
       positions.push(position);
+      this._drawPoint(position);
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     Path.handler.setInputAction((event: any) => {
-      // let position = ViewerService.viewer.scene.camera.pickEllipsoid(event.position);
-      // positions.push(position);
-      positions.pop();
       options.finish && options.finish(positions);
       this._end();
-    }, Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK );
+    }, Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
     Path.handler.setInputAction((movement: any) => {
       let position = ViewerService.viewer.scene.camera.pickEllipsoid(movement.endPosition);
       movePositions = positions.concat([position]);
     }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
   }
 
-  area() {
+  area(viewer: any, options: {
+    finish?: Function,
+    step?: Function,
+    cancel?: Function
+  }) {
     if (!Path.handler) return;
 
     this._start();
+    let positions: any[] = [];
+    let movePositions: any[] = [];
+    let movePoint: any = viewer.entities.add({
+      position: new Cesium.CallbackProperty(() => {
+        return movePositions[movePositions.length - 1] ? movePositions[movePositions.length - 1] : null
+      }),
+      point: {
+        pixelSize: 8,
+        color: Cesium.Color.DODGERBLUE,
+        outlineColor: Cesium.Color.WHITE,
+        outlineWidth: 2
+      }
+    });
+    let entity: any = viewer.entities.add({
+      polygon: {
+        hierarchy: new Cesium.CallbackProperty(() => {
+          return new Cesium.PolygonHierarchy(movePositions, [])
+        }),
+        material: new Cesium.Color(0, 1, 1, 0.6),
+        classificationType: Cesium.ClassificationType.BOTH 
+      },
+      polyline: {
+        positions: new Cesium.CallbackProperty(() => {
+          return movePositions.concat(movePositions[0] ? [movePositions[0]] : []);
+        }),
+        width: 3,
+        material: Cesium.Color.WHITE,
+        // depthFailMaterial: Cesium.Color.WHITE,
+        classificationType: Cesium.ClassificationType.BOTH
+      }
+    });
+    let points: any[] = [];
+    Path.handler.setInputAction((event: any) => {
+      let position = ViewerService.viewer.scene.camera.pickEllipsoid(event.position);
+      positions.push(position);
+      points.push(this._drawPoint(position));
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    Path.handler.setInputAction((event: any) => {
+      positions.pop();
+      options.finish && options.finish(positions);
+      this._end();
+    }, Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
+    Path.handler.setInputAction((movement: any) => {
+      let position = ViewerService.viewer.scene.camera.pickEllipsoid(movement.endPosition);
+      movePositions = positions.concat([position]);
+    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+    Path.handler.setInputAction(() => {
+      viewer.entities.remove(movePoint);
+      viewer.entities.remove(entity);
+      points.forEach((point: any) => {
+        viewer.entities.remove(point);
+      });
+    }, Cesium.ScreenSpaceEventType.RIGHT_CLICK)
   }
 
   /**
@@ -112,7 +174,7 @@ class Path {
     this.clearEntity();
   }
 
-  clearEntity () {
+  clearEntity() {
     for (let entity of this.entities) {
       ViewerService.viewer.entities.remove(entity);
     }

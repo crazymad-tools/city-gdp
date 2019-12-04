@@ -36,8 +36,27 @@ export default class ViewerService {
     this.viewer.camera.setView({
       destination: Cesium.Cartesian3.fromDegrees(120.7122681450, 29.5065475918, 900000),
     });
+    // this.viewer.scene.globe.depthTestAgainstTerrain = true;
+
     // this.viewer.scene.screenSpaceCameraController.enableTilt = false;
     // this.viewer.scene.screenSpaceCameraController.maximumZoomDistance = 900000;
+
+    // 使用右键旋转角度
+    this.viewer.scene.screenSpaceCameraController.tiltEventTypes = [
+
+      Cesium.CameraEventType.RIGHT_DRAG,
+
+      { eventType: Cesium.CameraEventType.LEFT_DRAG, modifier: Cesium.KeyboardEventModifier.CTRL },
+
+      { eventType: Cesium.CameraEventType.RIGHT_DRAG, modifier: Cesium.KeyboardEventModifier.CTRL }
+
+    ];
+
+    // 使用滚轮缩放
+    this.viewer.scene.screenSpaceCameraController.zoomEventTypes = [Cesium.CameraEventType.WHEEL, Cesium.CameraEventType.PINCH];
+
+    // 使用中键拖动地球
+    this.viewer.scene.screenSpaceCameraController.rotateEventTypes  = [Cesium.CameraEventType.MIDDLE_DRAG];
 
     this.loadMap();
   }

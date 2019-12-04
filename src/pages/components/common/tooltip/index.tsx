@@ -77,6 +77,11 @@ const Tooltip: React.FC<Props> = props => {
       tipdom.style.top = `${top + height / 2}px`;
       tipdom.classList.add('right');
     }
+    // setTimeout(() => {
+      // console.log(tipdom.style.transform);
+      // tipdom.style.transform = tipdom.style.transform.replace('scale(0)', 'scale(1)');
+      // tipdom && console.log(tipdom.style.webkitTransform);
+    // }, 1000);
   }
 
   /**

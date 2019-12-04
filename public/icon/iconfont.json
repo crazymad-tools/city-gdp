@@ -20,6 +20,13 @@
       "unicode_decimal": 58900
     },
     {
+      "icon_id": "2409162",
+      "name": "框选",
+      "font_class": "box-select",
+      "unicode": "e791",
+      "unicode_decimal": 59281
+    },
+    {
       "icon_id": "6677522",
       "name": "距离测量",
       "font_class": "distance",
@@ -32,6 +39,13 @@
       "font_class": "tool",
       "unicode": "e6fa",
       "unicode_decimal": 59130
+    },
+    {
+      "icon_id": "8361816",
+      "name": "问号",
+      "font_class": "help-circle",
+      "unicode": "e6c9",
+      "unicode_decimal": 59081
     }
   ]
 }
