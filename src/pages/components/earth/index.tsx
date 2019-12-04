@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import ViewerService from '@/service/ViewerService';
-import { RotatePolygon, CityPoint, DashLine, CapitalStar, Cylinder } from '@/utils/Primtive';
 import ModeController from '@/service/ModeController';
+import { RotatePolygon, CityPoint, DashLine, CapitalStar, Cylinder } from '@/utils/Primtive';
+import Tooltips from './tooltips';
 
 export default function() {
   useEffect(() => {
@@ -9,8 +10,7 @@ export default function() {
     let shanghai = [121.5328037588, 31.1816555919];
     let wenzhou = [120.6259214248, 28.0187203619];
     ViewerService.init('map');
-    // Cylinder.draw(ViewerService.viewer);
-    // ModeController.init();
+    ModeController.init();
     RotatePolygon.draw(ViewerService.viewer, hangzhou);
     RotatePolygon.draw(ViewerService.viewer, shanghai);
     DashLine.draw(ViewerService.viewer, [
@@ -30,6 +30,7 @@ export default function() {
   return (
     <>
       <div id="map" />
+      <Tooltips />
     </>
   );
 }

@@ -5,7 +5,7 @@ import './index.scss';
 interface Props {
   content: string;
   direction: string;
-  delay: number;
+  delay?: number;
 }
 
 let intimer: any = null;
@@ -20,7 +20,7 @@ const Tooltip: React.FC<Props> = props => {
       intimer = setTimeout(() => {
         show();
         intimer = null;
-      }, props.delay - (new Date().getTime() - begin));
+      }, (props.delay || 0) - (new Date().getTime() - begin));
     }
   });
 

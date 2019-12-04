@@ -23,8 +23,10 @@ class Path {
         pixelSize: 8,
         color: Cesium.Color.DODGERBLUE,
         outlineColor: Cesium.Color.WHITE,
-        outlineWidth: 2
-      }
+        outlineWidth: 2,
+        index: 10
+      },
+      index: 10
     });
     return point;
   }
@@ -60,11 +62,12 @@ class Path {
     if (!Path.handler) return;
 
     this._start();
+    console.log('start');
     Path.handler.setInputAction((event: any) => {
       let position = ViewerService.viewer.scene.camera.pickEllipsoid(event.position);
-      this._drawPoint(position);
+      
+      finish(position, this._drawPoint(position));
       this._end();
-      finish(position);
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
   }
 
@@ -139,8 +142,10 @@ class Path {
         width: 3,
         material: Cesium.Color.WHITE,
         // depthFailMaterial: Cesium.Color.WHITE,
-        classificationType: Cesium.ClassificationType.BOTH
-      }
+        classificationType: Cesium.ClassificationType.BOTH,
+        index: 1,
+      },
+      index: 1
     });
     let points: any[] = [];
     Path.handler.setInputAction((event: any) => {
@@ -171,7 +176,7 @@ class Path {
    */
   clear() {
     this._end();
-    this.clearEntity();
+    // this.clearEntity();
   }
 
   clearEntity() {

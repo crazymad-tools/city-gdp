@@ -69,26 +69,26 @@ export default class ViewerService {
     );
     this.tdtdMap = this.viewer.imageryLayers.addImageryProvider(
       // new Cesium.ImageryLayer(
-      // new Cesium.MapboxImageryProvider({
-      //   mapId: 'mapbox.dark',
-      //   accessToken: 'pk.eyJ1IjoiY3JhenltYWQwNjAxIiwiYSI6ImNqd2c0anpjMDE2bG40NG5wZXc5OHgyOHMifQ.Lw8VwGYJnV0xNrBjF5NMOw',
-      // }),
+      new Cesium.MapboxImageryProvider({
+        mapId: 'mapbox.dark',
+        accessToken: 'pk.eyJ1IjoiY3JhenltYWQwNjAxIiwiYSI6ImNqd2c0anpjMDE2bG40NG5wZXc5OHgyOHMifQ.Lw8VwGYJnV0xNrBjF5NMOw',
+      }),
       //   {
       //     gama: 0.5,
       //     // alpha: 0.5
       //     // brightness: 0.5
       //   }
       // )
-      new Cesium.WebMapTileServiceImageryProvider({
-        url: `http://{s}.tianditu.com/vec_w/wmts?tk=aaffda907f90f15f0a1efec9d3569fda&service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles`,
-        layer: 'img',
-        style: 'default',
-        format: 'tiles',
-        tileMatrixSetID: 'w',
-        subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
-        credit: new Cesium.Credit('天地图全球矢量服务'),
-        maximumLevel: 18,
-      })
+      // new Cesium.WebMapTileServiceImageryProvider({
+      //   url: `http://{s}.tianditu.com/vec_w/wmts?tk=aaffda907f90f15f0a1efec9d3569fda&service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles`,
+      //   layer: 'img',
+      //   style: 'default',
+      //   format: 'tiles',
+      //   tileMatrixSetID: 'w',
+      //   subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
+      //   credit: new Cesium.Credit('天地图全球矢量服务'),
+      //   maximumLevel: 18,
+      // })
     );
   }
 

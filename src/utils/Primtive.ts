@@ -131,7 +131,7 @@ export class RotatePolygon {
     });
     this.primitives.push(primitive);
   }
-
+  
 }
 
 export class CityPoint {
