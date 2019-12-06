@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Area, Distance, Point } from './measure';
-import './index.scss';
 import ToolCommon from './ToolCommon';
+import { Area, Distance, Point, Bloom, Sunlight } from './Tools';
+import './index.scss';
 import Tooltip from '../common/tooltip';
 
 interface Props {}
@@ -38,22 +38,38 @@ const Tool: React.FC<Props> = props => {
       name: '框选',
       icon: 'gdp-box-select',
       active: false,
-      tool: Area
-    }
+      tool: Area,
+    },
+    {
+      name: '泛光',
+      icon: 'gdp-bloom',
+      active: false,
+      tool: Bloom,
+    },
+    {
+      name: '光照',
+      icon: 'gdp-sun',
+      active: false,
+      tool: Sunlight,
+    },
   ]);
 
   function toggleTool(name: string) {
-    for (let tool of toolList) {
-      if (tool.active) {
-        tool.tool.disable();
-      }
-      if (tool.name !== name) {
-        tool.active = false;
-      } else {
-        tool.active = !tool.active;
-        tool.active && tool.tool.enable();
-      }
+    if (name === '坐标测量' || name === '距离测量' || name === '面积测量') {
+      toolList.forEach((tool: Tool) => {
+        if (
+          (tool.name === '坐标测量' || tool.name === '距离测量' || tool.name === '面积测量') &&
+          tool.name !== name
+        ) {
+          tool.active = false;
+          tool.tool.disable();
+        }
+      });
     }
+    let tool: Tool | undefined = toolList.find((tool: Tool) => tool.name === name);
+    tool && (tool.active = !tool.active);
+    tool && tool.active && tool.tool.enable();
+    tool && !tool.active && tool.tool.disable();
 
     setToolList(toolList.concat([]));
   }

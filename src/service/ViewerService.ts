@@ -36,29 +36,31 @@ export default class ViewerService {
     this.viewer.camera.setView({
       destination: Cesium.Cartesian3.fromDegrees(120.7122681450, 29.5065475918, 900000),
     });
-    // this.viewer.scene.globe.depthTestAgainstTerrain = true;
+    this.viewer.scene.globe.depthTestAgainstTerrain = true;
 
     // this.viewer.scene.screenSpaceCameraController.enableTilt = false;
     // this.viewer.scene.screenSpaceCameraController.maximumZoomDistance = 900000;
 
     // 使用右键旋转角度
-    this.viewer.scene.screenSpaceCameraController.tiltEventTypes = [
+    // this.viewer.scene.screenSpaceCameraController.tiltEventTypes = [
 
-      Cesium.CameraEventType.RIGHT_DRAG,
+    //   Cesium.CameraEventType.RIGHT_DRAG,
 
-      { eventType: Cesium.CameraEventType.LEFT_DRAG, modifier: Cesium.KeyboardEventModifier.CTRL },
+    //   { eventType: Cesium.CameraEventType.LEFT_DRAG, modifier: Cesium.KeyboardEventModifier.CTRL },
 
-      { eventType: Cesium.CameraEventType.RIGHT_DRAG, modifier: Cesium.KeyboardEventModifier.CTRL }
+    //   { eventType: Cesium.CameraEventType.RIGHT_DRAG, modifier: Cesium.KeyboardEventModifier.CTRL }
 
-    ];
+    // ];
 
-    // 使用滚轮缩放
-    this.viewer.scene.screenSpaceCameraController.zoomEventTypes = [Cesium.CameraEventType.WHEEL, Cesium.CameraEventType.PINCH];
+    // // 使用滚轮缩放
+    // this.viewer.scene.screenSpaceCameraController.zoomEventTypes = [Cesium.CameraEventType.WHEEL, Cesium.CameraEventType.PINCH];
 
-    // 使用中键拖动地球
-    this.viewer.scene.screenSpaceCameraController.rotateEventTypes  = [Cesium.CameraEventType.MIDDLE_DRAG];
+    // // 使用中键拖动地球
+    // this.viewer.scene.screenSpaceCameraController.rotateEventTypes  = [Cesium.CameraEventType.MIDDLE_DRAG];
 
     this.loadMap();
+    // this.loadTileset('http://popcity.popsmart.cn:9001/data/ningbo/shaoxing-b3dm-zhuanzuobiao/b3dm/tileset_20181001.json');
+    // this.loadTileset('http://popcity.popsmart.cn:9001/data/ningbo/shaoxing-b3dm-zhuanzuobiao/b3dm/tileset_20190708.json');
   }
 
   static loadMap() {
@@ -90,6 +92,23 @@ export default class ViewerService {
       //   maximumLevel: 18,
       // })
     );
+  }
+
+  static loadTileset (url: string) {
+    let tileset = this.viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
+        url: url,
+        show: true,
+        skipLevelOfDetail: false,
+        maximumNumberOfLoadedTiles: 500,
+        maximumMemoryUsage: 512,
+        baseScreenSpaceError: 1024,
+        skipScreenSpaceErrorFactor: 16,
+        skipLevels: 4,
+        immediatelyLoadDesiredLevelOfDetail: false,
+        loadSiblings: false,
+        maximumScreenSpaceError: 1,
+        cullWithChildrenBounds: true,
+      }));
   }
 
   static getViewerPromise() {

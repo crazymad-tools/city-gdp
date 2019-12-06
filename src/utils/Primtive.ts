@@ -24,7 +24,7 @@ export class RotatePolygon {
     let radians = 0;
     let expand = 0.4;
     let expandDirection = 0;
-    let primitive = new Cesium.Primitive({
+    let primitive = new Cesium.GroundPrimitive({
       geometryInstances: [instance],
       appearance: new Cesium.EllipsoidSurfaceAppearance({
         material: new Cesium.Material({
@@ -131,7 +131,7 @@ export class RotatePolygon {
     });
     this.primitives.push(primitive);
   }
-  
+
 }
 
 export class CityPoint {
@@ -156,7 +156,7 @@ export class CityPoint {
 
     let radians = 0;
     let expand = 0.4;
-    let primitive = new Cesium.Primitive({
+    let primitive = new Cesium.GroundPrimitive({
       geometryInstances: [instance],
       appearance: new Cesium.EllipsoidSurfaceAppearance({
         material: new Cesium.Material({
@@ -246,7 +246,7 @@ export class CapitalStar {
 
     let radians = 0;
     let expand = 0.4;
-    let primitive = new Cesium.Primitive({
+    let primitive = new Cesium.GroundPrimitive({
       geometryInstances: [instance],
       appearance: new Cesium.EllipsoidSurfaceAppearance({
         material: new Cesium.Material({
@@ -366,9 +366,88 @@ export class DashLine {
           // repeat: new Cesium.Cartesian2(10.0, 1.0)
           color: Cesium.Color.GRAY,
           gapColor: Cesium.Color.WHITE,
-          dashLength: 40
+          dashLength: 40,
+          classificationType: Cesium.ClassificationType.BOTH
         })
       }
+    });
+  }
+}
+
+export class Box {
+  static draw(viewer: any, coordinate: any, color: string) {
+    return viewer.entities.add({
+      position: Cesium.Cartesian3.fromDegrees(coordinate[0], coordinate[1], 5000),
+      box: {
+        dimensions: { x: 10000, y: 10000, z: 10000 },
+        material: Cesium.Color.fromCssColorString(color),
+        show: true,
+        shadows: Cesium.ShadowMode.ENABLED 
+      }
+    });
+  }
+}
+
+export class Radar {
+  static draw(viewer: any, coordinates: number[], radius: number, color: string) {
+    let _color: any = Cesium.Color.fromCssColorString(color);
+    let center = Cesium.Cartesian3.fromDegrees(coordinates[0], coordinates[1]);
+    let leftTop = Coordinates.move(center, [-radius, radius, 0]);
+    let rightBottom = Coordinates.move(center, [radius, -radius, 0]);
+    let leftTopLon = Coordinates.c3sToRadians(leftTop);
+    let rightBottomLon = Coordinates.c3sToRadians(rightBottom);
+    let geometry: any = new Cesium.RectangleGeometry({
+      rectangle: new Cesium.Rectangle(
+        leftTopLon.longitude,
+        rightBottomLon.latitude,
+        rightBottomLon.longitude,
+        leftTopLon.latitude)
+    });
+    let instance = new Cesium.GeometryInstance({
+      geometry: geometry,
+    });
+
+    let primitive = new Cesium.GroundPrimitive({
+      geometryInstances: [instance],
+      appearance: new Cesium.EllipsoidSurfaceAppearance({
+        material: new Cesium.Material({
+          fabric: {
+            type: 'Rim',
+            uniforms: {
+              radians: 0,
+              color: { x: _color.x, y: _color.y, z: _color.z }
+            },
+            source: `
+                  #define M_PI 3.1415926535897932384626433832795
+      
+                  // uniform sampler2D image;
+                  uniform float radians;
+                  uniform vec3 color;
+      
+                  // 求余数，webgl没有原生求余操作
+                  int mod(int x, int y) {
+                    if (x < 0) {
+                      x = -x;
+                    }
+                    int z = x / y;
+                    return x - z * y;
+                  }
+      
+                  czm_material czm_getMaterial(czm_materialInput materialInput)
+                  {
+                    czm_material material = czm_getDefaultMaterial(materialInput);
+                    vec2 st = vec2(materialInput.st.x - 0.5, materialInput.st.y - 0.5);
+                    material.diffuse = vec3(0.1, 0.1, 0.1);
+                    return material;
+                  }
+                  `
+          }
+        })
+      })
+    });
+    viewer.scene.primitives.add(primitive);
+    viewer.scene.preUpdate.addEventListener(() => {
+      // primitive.appearance.material.uniforms.radians = radians;
     });
   }
 }

@@ -46,6 +46,20 @@
       "font_class": "help-circle",
       "unicode": "e6c9",
       "unicode_decimal": 59081
+    },
+    {
+      "icon_id": "8797993",
+      "name": "曝光",
+      "font_class": "bloom",
+      "unicode": "e7d0",
+      "unicode_decimal": 59344
+    },
+    {
+      "icon_id": "9396630",
+      "name": "太阳",
+      "font_class": "sun",
+      "unicode": "e6da",
+      "unicode_decimal": 59098
     }
   ]
 }

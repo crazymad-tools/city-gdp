@@ -19,7 +19,6 @@ const Tooltips: React.FC<Props> = props => {
   const [tooltips, setTooltips] = useState<any[]>([]);
 
   useEffect(() => {
-    console.log(props.tooltips);
     setTooltips(
       props.tooltips.map((tooltip: Tooltip) => {
         return Object.assign(
