@@ -382,7 +382,7 @@ export class Box {
         dimensions: { x: 10000, y: 10000, z: 10000 },
         material: Cesium.Color.fromCssColorString(color),
         show: true,
-        shadows: Cesium.ShadowMode.ENABLED 
+        shadows: Cesium.ShadowMode.ENABLED
       }
     });
   }
@@ -450,4 +450,28 @@ export class Radar {
       // primitive.appearance.material.uniforms.radians = radians;
     });
   }
+}
+
+export class RoadLine {
+
+  static draw(viewer: any, url: string) {
+    Cesium.GeoJsonDataSource.load(url).then((res: any) => {
+      let features = res.entities.values;
+      for (let feature of features) {
+        feature.polyline.positions = feature.polyline.positions._value.map((c3s: any) => {
+          return Coordinates.move(c3s, [0, 0, 10]);
+        });
+        feature.polyline.width = 5;
+        feature.polyline.material = new Cesium.PolylineGlowMaterialProperty({
+          color: Cesium.Color.fromCssColorString('#00ffff'),
+          glowPower: 0.25,
+          taperPower: 1.0
+        });
+        feature.polyline.zIndex = -1;
+        feature.clampToGround = true;
+        viewer.entities.add(feature);
+      }
+    });
+  }
+
 }

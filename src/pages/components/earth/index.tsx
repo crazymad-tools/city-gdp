@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import ViewerService from '@/service/ViewerService';
 import ModeController from '@/service/ModeController';
-import { RotatePolygon, CityPoint, DashLine, CapitalStar, Cylinder, Box, Radar } from '@/utils/Primtive';
+import { RotatePolygon, CityPoint, DashLine, CapitalStar, Cylinder, Box, Radar, RoadLine } from '@/utils/Primtive';
 import { TestPostProcessStage } from '@/utils/PostProcessStage';
 import Tooltips from './tooltips';
 
@@ -29,7 +29,7 @@ export default function() {
 
     Box.draw(ViewerService.viewer, [120.6239600329, 29.8585075419], '#006699');
     Radar.draw(ViewerService.viewer, [120.7239600329, 29.8585075419], 10000, '#ff0000');
-
+    RoadLine.draw(ViewerService.viewer, '/data/geojson/road.geojson');
     TestPostProcessStage.draw(ViewerService.viewer);
   }, []); 
 
