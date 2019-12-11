@@ -463,7 +463,7 @@ export class RoadLine {
         });
         feature.polyline.width = 5;
         feature.polyline.material = new Cesium.PolylineGlowMaterialProperty({
-          color: Cesium.Color.fromCssColorString('#00ffff'),
+          color: Cesium.Color.fromCssColorString('#00ff88'),
           glowPower: 0.25,
           taperPower: 1.0
         });

@@ -36,7 +36,7 @@ export default class ViewerService {
     this.viewer.camera.setView({
       destination: Cesium.Cartesian3.fromDegrees(120.7122681450, 29.5065475918, 900000),
     });
-    this.viewer.scene.globe.depthTestAgainstTerrain = true;
+    // this.viewer.scene.globe.depthTestAgainstTerrain = true;
 
     // this.viewer.scene.screenSpaceCameraController.enableTilt = false;
     // this.viewer.scene.screenSpaceCameraController.maximumZoomDistance = 900000;
@@ -64,34 +64,39 @@ export default class ViewerService {
   }
 
   static loadMap() {
-    this.googleMap = this.viewer.imageryLayers.addImageryProvider(
-      new Cesium.UrlTemplateImageryProvider({
-        url: 'http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}&s=Gali',
-      })
-    );
-    this.tdtdMap = this.viewer.imageryLayers.addImageryProvider(
-      // new Cesium.ImageryLayer(
-      new Cesium.MapboxImageryProvider({
-        mapId: 'mapbox.dark',
-        accessToken: 'pk.eyJ1IjoiY3JhenltYWQwNjAxIiwiYSI6ImNqd2c0anpjMDE2bG40NG5wZXc5OHgyOHMifQ.Lw8VwGYJnV0xNrBjF5NMOw',
-      }),
-      //   {
-      //     gama: 0.5,
-      //     // alpha: 0.5
-      //     // brightness: 0.5
-      //   }
-      // )
-      // new Cesium.WebMapTileServiceImageryProvider({
-      //   url: `http://{s}.tianditu.com/vec_w/wmts?tk=aaffda907f90f15f0a1efec9d3569fda&service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles`,
-      //   layer: 'img',
-      //   style: 'default',
-      //   format: 'tiles',
-      //   tileMatrixSetID: 'w',
-      //   subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
-      //   credit: new Cesium.Credit('天地图全球矢量服务'),
-      //   maximumLevel: 18,
-      // })
-    );
+    // this.googleMap = this.viewer.imageryLayers.addImageryProvider(
+    //   new Cesium.UrlTemplateImageryProvider({
+    //     url: 'http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}&s=Gali',
+    //   })
+    // );
+    // this.tdtdMap = this.viewer.imageryLayers.addImageryProvider(
+    //   // new Cesium.ImageryLayer(
+    //   new Cesium.MapboxImageryProvider({
+    //     mapId: 'mapbox.dark',
+    //     accessToken: 'pk.eyJ1IjoiY3JhenltYWQwNjAxIiwiYSI6ImNqd2c0anpjMDE2bG40NG5wZXc5OHgyOHMifQ.Lw8VwGYJnV0xNrBjF5NMOw',
+    //   }),
+    //   //   {
+    //   //     gama: 0.5,
+    //   //     // alpha: 0.5
+    //   //     // brightness: 0.5
+    //   //   }
+    //   // )
+    //   // new Cesium.WebMapTileServiceImageryProvider({
+    //   //   url: `http://{s}.tianditu.com/vec_w/wmts?tk=aaffda907f90f15f0a1efec9d3569fda&service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles`,
+    //   //   layer: 'img',
+    //   //   style: 'default',
+    //   //   format: 'tiles',
+    //   //   tileMatrixSetID: 'w',
+    //   //   subdomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7'],
+    //   //   credit: new Cesium.Credit('天地图全球矢量服务'),
+    //   //   maximumLevel: 18,
+    //   // })
+    // );
+
+    // this.viewer.terrainProvider = new Cesium.CesiumTerrainProvider({
+    //     url : Cesium.IonResource.fromAssetId(3956),
+    //     requestVertexNormals : true
+    // });
   }
 
   static loadTileset (url: string) {
