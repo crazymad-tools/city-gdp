@@ -27,6 +27,13 @@
       "unicode_decimal": 59281
     },
     {
+      "icon_id": "6598339",
+      "name": "caret-down",
+      "font_class": "down",
+      "unicode": "e8ec",
+      "unicode_decimal": 59628
+    },
+    {
       "icon_id": "6677522",
       "name": "距离测量",
       "font_class": "distance",

@@ -1,0 +1,60 @@
+.select {
+  position: relative;
+  background: white;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 10px;
+  span {
+    display: inline-block;
+    width: 100%;
+    overflow: hidden; //超出的文本隐藏
+    text-overflow: ellipsis; //溢出用省略号显示
+    white-space: nowrap;
+    // text-align: center;
+  }
+  .iconfont {
+    width: 20px;
+  }
+}
+@keyframes select-option-hide {
+  from {
+    z-index: 1000;
+  }
+  to {
+    z-index: -1000;
+  }
+}
+.select-options {
+  position: fixed;
+  background: white;
+  border-radius: 5px;
+  z-index: 1000;
+  box-sizing: border-box;
+  transition: opacity 0.3s, transform 0.3s;
+  transform: translateY(-10px);
+  &:not(.show) {
+    opacity: 0;
+    animation: select-option-hide 1ms;
+    animation-delay: 0.3s;
+    animation-fill-mode: forwards;
+  }
+  &.show {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  .select-option {
+    width: 100%;
+    cursor: pointer;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    transition: all 0.3s;
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+  }
+}

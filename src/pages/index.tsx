@@ -13,7 +13,7 @@ export default function() {
 
   return (
     <>
-      {/* <Header /> */}
+      <Header />
       <Tool />
       <MapSelector />
       <Earth />
